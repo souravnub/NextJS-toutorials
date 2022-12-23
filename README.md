@@ -20,7 +20,7 @@ the above code will set the title of the page to **_Hello_**
 -   favicon can also be set from here for individual page
 
 2. **SCRIPT COMPONENT :** This is a component that helps us to import any script into our project. _It is not used inside the Head component_. It also enables us to lazyload the scripts that we import from external sources.
+   _more info :_[NextJS script component](https://nextjs.org/docs/basic-features/script).
 
----
-
-_more info :_[NextJS script component](https://nextjs.org/docs/basic-features/script).
+3.**IMAGE COMPONENT :** NextJS also provides an Image component that helps us to make our images more optimmized and web friendly.
+_more info :_ [NextJS Image component](https://nextjs.org/docs/api-reference/next/image)
