@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Nav from "../components/nav/Nav";
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
@@ -16,6 +17,9 @@ export default function App({ Component, pageProps }) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
+            <Nav />
+
             <Component {...pageProps} />
         </>
     );

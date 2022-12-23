@@ -1,0 +1,65 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-lg) var(--padding-xl);
+
+    border-bottom: 1.5px solid rgb(0 0 0 / 0.1);
+}
+
+.nav > a {
+    text-transform: uppercase;
+    word-spacing: 0.5rem;
+    font-size: var(--fs-md);
+    font-weight: 600;
+}
+
+.hammenu {
+    position: relative;
+    width: 1.5rem;
+    height: 1.3rem;
+}
+.hammenu div {
+    height: 2px;
+    background-color: rgb(0 0 0 / 0.8);
+    border-radius: 100vh;
+
+    transform-origin: center;
+    transition: rotate 250ms ease, transform 250ms ease;
+
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    translate: 0 -50%;
+}
+
+.hammenu > div:nth-child(1) {
+    transform: translateY(-0.2rem);
+}
+.hammenu > div:nth-child(2) {
+    transform: translateY(0.2rem);
+}
+
+.hammenuClose > div:nth-child(1) {
+    transform: none;
+    rotate: 42deg;
+}
+.hammenuClose > div:nth-child(2) {
+    transform: none;
+    rotate: -42deg;
+}
+
+.createBlogButton {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-sm);
+    font-size: 0.9rem;
+    padding: var(--padding-sm) var(--padding-lg);
+    font-weight: 500;
+    border: 1.5px solid rgb(0 0 0 / 0.1);
+    border-radius: 8px;
+    transition: background-color 250ms ease;
+}
+.createBlogButton:hover {
+    background-color: rgb(0 0 0 / 0.03);
+}
