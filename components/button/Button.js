@@ -4,8 +4,20 @@ import styles from "./button.module.css";
 
 const Button = ({ children }) => {
     return (
-        // using css modules' classes in our jsx
-        <button className={styles.createBlogButton}>{children}</button>
+        <>
+            <style jsx>
+                {`
+                    .button {
+                        background: green;
+                        color: black;
+                        border: none;
+                        padding: 1.4rem;
+                    }
+                `}
+            </style>
+
+            <button className="button">{children}</button>
+        </>
     );
 };
 
