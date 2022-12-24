@@ -1,30 +1,3 @@
-# Next JS Toutorials
-
-This Repo is the record for all the learnings that I came across while learning nextJs from **codeWithHarry**
-
-## BUILT-IN COMPONENTS IN NEXTJS
-
-1. **NEXT HEAD :** This is a utility component that is provided by next to us. Using this componenet we can inject anything into the <head> of the page.
-
-```js Example
-import Head from "next/head";
-<Head>
-    <title>Hello</title>
-</Head>;
-```
-
-the above code will set the title of the page to **_Hello_**
-
--   script tags can also be added here. Example if we want to add specific script into the page then we can import next head into that page and then can import the required script into that page.
--   meta tags can be added in next Head component
--   favicon can also be set from here for individual page
-
-2. **SCRIPT COMPONENT :** This is a component that helps us to import any script into our project. _It is not used inside the Head component_. It also enables us to lazyload the scripts that we import from external sources.
-   _more info :_[NextJS script component](https://nextjs.org/docs/basic-features/script).
-
-3.**IMAGE COMPONENT :** NextJS also provides an Image component that helps us to make our images more optimmized and web friendly.
-_more info :_ [NextJS Image component](https://nextjs.org/docs/api-reference/next/image)
-
 ## NextJs Features
 
 1. **CSS Modules :** nextJS already comes in with built-in css modules. These modules helps us to keep our css scoped to each and individual component only.
@@ -53,7 +26,7 @@ By default we cannot import a css file into any other component except \_app.js.
 
 Similarly, styleSheets like Bootstrap can only be imported in \_app.js, to use third-party styles in a single component : [using styles from third party source in single component](https://nextjs.org/docs/basic-features/built-in-css-support#import-styles-from-node_modules)
 
-2.**STYLED JSX :** we can use styled jsx in our components for modular scope of css. Using styled jsx, the styles would not collide if the styled jsx is not made global.
+2.**STYLED JSX :** we can use styled jsx in our components for modular scope of css. **_remember: we cannot use child class selectors in styledJSX_**, for extra info : [blog in styledJSX by nextjs](https://nextjs.org/blog/styling-next-with-styled-jsx). Using styled jsx, the styles would not collide if the styled jsx is not made global.
 Styled JSX is also in two formats :
 
 -   component scopped
@@ -101,6 +74,74 @@ Styled JSX is also in two formats :
                 <Button>hello world</Button>
                 // the button below will not have the styles from Button.js styledJSX,
                 because styledJSX in Button.js was not global
+                <button className="button">wow world</button>
+            </div>
+        );
+    };
+
+    export default about;
+    ```
+
+    2.**global styledJSX :** a component that has styledJSX that is scopped globally will be able to share the styles with the component that it is imported into (provided that the component that is importing it has similar css classes as in global styledJSX of the imported component). **If we want to use global styledJSX in another component then we also need to use the component that contain global styledJSX in that component.**
+
+    _Button.js_
+
+    ```js
+    const Button = ({ children }) => {
+        return (
+            <>
+                <style jsx global>
+                    {" "}
+                    // here's the change
+                    {`
+                        .button {
+                            background: green;
+                            color: black;
+                            border: none;
+                            padding: 1.4rem;
+                        }
+                    `}
+                </style>
+
+                <button className="button">{children}</button>
+            </>
+        );
+    };
+
+    export default Button;
+    ```
+
+    _about .js_
+
+    ```js
+    import React from "react";
+    import Button from "../components/button/Button";
+    const about = () => {
+        return (
+            <div className="main-div">
+                <style jsx>
+                    {`
+                        .main-div {
+                            background-color: white;
+                            min-height: 100vh;
+                        }
+                        .text {
+                            font-size: 1.3rem;
+                            background-color: black;
+                            color: white;
+                            padding: 1rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    `}
+                </style>
+                <span className="text">hello this is about page</span>
+                //the button below will get the styles from styledJSX
+                <Button>hello world</Button>
+                // the button has class .button and the globally scopped
+                styledJSX in Button.js also have class .button in it ...
+                therefore below button will get styles of that class
                 <button className="button">wow world</button>
             </div>
         );
