@@ -1,10 +1,19 @@
 .nav {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    background-color: var(--clr-primary-100);
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--padding-lg) var(--padding-xl);
+    padding: var(--padding-md) var(--padding-xl);
 
     border-bottom: 1.5px solid rgb(0 0 0 / 0.1);
+    z-index: var(--z-index-nav);
+
+    transition: background-color 250ms ease-in-out;
+    isolation: isolate;
 }
 
 .nav > a {
@@ -21,7 +30,7 @@
     width: var(--hammenu-line-width);
     height: 1.3rem;
 }
-.hammenu div {
+.hammenu :global(.line) {
     height: 2px;
     background-color: rgb(0 0 0 / 0.85);
     border-radius: 100vh;
@@ -35,18 +44,18 @@
     translate: 0 -50%;
 }
 
-.hammenu > div:nth-child(1) {
+.hammenu > :global(.line:nth-of-type(1)) {
     transform: translateY(-0.2rem);
 }
-.hammenu > div:nth-child(2) {
+.hammenu > :global(.line:nth-of-type(2)) {
     transform: translateY(0.2rem);
 }
 
-.hammenuClose > div:nth-child(1) {
+.hammenuClose > :global(.line:nth-of-type(1)) {
     transform: none;
     rotate: 42deg;
 }
-.hammenuClose > div:nth-child(2) {
+.hammenuClose > :global(.line:nth-of-type(2)) {
     transform: none;
     rotate: -42deg;
 }
@@ -87,4 +96,81 @@
 }
 .createBlogButton:hover {
     background-color: rgb(0 0 0 / 0.03);
+}
+
+.navigation_menu {
+    height: 90vh;
+    overflow: auto;
+    background: var(--clr-primary-200);
+
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+
+    /* display will be made flex when navigation_menu is opened */
+    display: none;
+
+    flex-direction: column;
+    text-transform: capitalize;
+
+    padding-block: var(--padding-lg);
+
+    transform: translateY(100%);
+    z-index: -1;
+}
+.navigation_menu > * + * {
+    border-top: var(--clr-primary-400) 2px solid;
+}
+.navigation_menu a {
+    display: inline-block;
+    min-width: 100%;
+    padding: var(--padding-lg) var(--padding-xl);
+}
+.navigation_menu :global(.mobile-only) {
+    display: none;
+}
+.navigation_menu[data-state="opened"] {
+    animation: navMenuOpen 250ms ease-in-out forwards;
+    display: flex;
+}
+.navigation_menu[data-state="closing"] {
+    animation: navMenuClose 250ms ease-in-out forwards;
+    display: flex;
+}
+.navigation_menu[data-state="closed"] {
+    display: none;
+}
+
+@keyframes navMenuOpen {
+    0% {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(100%);
+    }
+}
+@keyframes navMenuClose {
+    0% {
+        opacity: 1;
+        transform: translateY(100%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+}
+
+/* 500px - 31.25rem */
+@media screen and (max-width: 31.25rem) {
+    .navUtilitiesContainer {
+        display: none;
+    }
+    .navigation_menu :global(.mobile-only) {
+        display: inline-block;
+    }
+    .nav {
+        flex-direction: row-reverse;
+    }
 }

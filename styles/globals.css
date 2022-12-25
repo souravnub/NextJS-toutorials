@@ -1,15 +1,34 @@
 :root {
-    --padding-xs: 0.1rem;
-    --padding-sm: 0.3rem;
+    --padding-xs: 0.25rem;
+    --padding-sm: 0.4rem;
     --padding-md: 0.6rem;
     --padding-lg: 1rem;
     --padding-xl: 1.4rem;
 
     --fs-xs: 0.4rem;
-    --fs-sm: 0.7rem;
+    --fs-sm: 0.9rem;
     --fs-md: 1.3rem;
     --fs-lg: 1.5rem;
     --fs-xl: 1.8rem;
+
+    --clr-primary-100: white;
+    --clr-primary-200: rgb(247, 247, 247);
+    --clr-primary-300: rgb(243, 243, 243);
+    --clr-primary-400: rgb(230, 230, 230);
+    --clr-primary-500: rgb(213, 213, 213);
+    --clr-primary-600: rgb(187, 187, 187);
+    --clr-primary-800: rgb(170, 170, 170);
+    --clr-primary-900: rgb(91, 91, 91);
+    --clr-primary-1000: rgb(29, 29, 29);
+
+    --clr-hover-300: rgb(229, 229, 229);
+    --clr-hover-400: rgb(220, 220, 220);
+
+    --font-clr: black;
+
+    --border-primary: 1.6px solid var(--clr-primary-600);
+
+    --z-index-nav: 999;
 }
 /* Box sizing rules */
 *,
@@ -33,9 +52,10 @@ dd {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role="list"],
-ol[role="list"] {
+:where(ul[role="list"], ol[role="list"]) {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* Set core root defaults */
@@ -69,6 +89,7 @@ button,
 textarea,
 select {
     font: inherit;
+    color: inherit;
 }
 
 button {
@@ -96,4 +117,63 @@ a {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+.sr-only {
+    border: 0 !important;
+    clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+    -webkit-clip-path: inset(50%) !important;
+    clip-path: inset(50%) !important; /* 2 */
+    height: 1px !important;
+    overflow: hidden !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    white-space: nowrap !important; /* 3 */
+}
+
+.button_primary_box,
+.button_border_box,
+.button_primary_pill,
+.button_border_pill {
+    padding: var(--padding-sm) var(--padding-xl);
+    color: var(--clr-primary-1000);
+    font-weight: 500;
+    font-size: calc(var(--fs-sm) - 0.1rem);
+
+    transition: background-color 250ms ease;
+}
+
+.button_primary_pill {
+    background-color: var(--clr-primary-300);
+    border-radius: 100vh;
+}
+
+.button_border_pill {
+    background-color: transparent;
+    border-radius: 100vh;
+    border: var(--border-primary);
+}
+
+.button_primary_box {
+    background-color: var(--clr-primary-400);
+    border-radius: 0.6em;
+}
+
+.button_border_box {
+    background-color: transparent;
+    border-radius: 0.4em;
+    border: var(--border-primary);
+}
+
+.button_border_box:hover,
+.button_border_pill:hover {
+    background-color: var(--clr-primary-200);
+}
+.button_primary_box:hover {
+    background-color: var(--clr-hover-400);
+}
+.button_primary_pill:hover {
+    background-color: var(--clr-hover-300);
 }
