@@ -15,13 +15,15 @@
 }
 
 .hammenu {
+    --hammenu-line-width: 1.5rem;
+
     position: relative;
-    width: 1.5rem;
+    width: var(--hammenu-line-width);
     height: 1.3rem;
 }
 .hammenu div {
     height: 2px;
-    background-color: rgb(0 0 0 / 0.8);
+    background-color: rgb(0 0 0 / 0.85);
     border-radius: 100vh;
 
     transform-origin: center;
@@ -49,6 +51,29 @@
     rotate: -42deg;
 }
 
+.navUtilitiesContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-lg);
+}
+.navUtilitiesContainer .notificationButton {
+    font-size: var(--fs-md);
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.navUtilitiesContainer .notificationButton:global(.have-notifications)::before {
+    content: "";
+    display: block;
+    width: 0.35rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: rgb(255, 155, 6);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .createBlogButton {
     display: flex;
     align-items: center;
