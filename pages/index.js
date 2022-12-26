@@ -15,7 +15,7 @@ export default function Home() {
     const serachInputRef = useRef(null);
 
     const [currentBlogsType, setCurrentBlogsType] = useState("all");
-    const DROPDOWN_OPTIONS = ["all", "following", "popular", "recent"];
+    const DROPDOWN_OPTIONS = ["all", "following", "popular", "latest"];
     const onOptionChangeHandler = (e) => {
         // on option change request to backend should be made for blogs
         console.log("option selected :" + e.target.value);
@@ -97,8 +97,8 @@ export default function Home() {
                     <Image
                         alt=""
                         src="https://www.svgrepo.com/show/284506/notes-notebook.svg"
-                        width={100}
-                        height={100}
+                        width={80}
+                        height={80}
                     />
                 </article>
             </aside>
