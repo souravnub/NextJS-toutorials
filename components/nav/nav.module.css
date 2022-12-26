@@ -52,12 +52,10 @@
 }
 
 .hammenuClose > :global(.line:nth-of-type(1)) {
-    transform: none;
-    rotate: 42deg;
+    transform: rotate(42deg);
 }
 .hammenuClose > :global(.line:nth-of-type(2)) {
-    transform: none;
-    rotate: -42deg;
+    transform: rotate(-42deg);
 }
 
 .navUtilitiesContainer {
@@ -99,9 +97,15 @@
 }
 
 .navigation_menu {
-    height: 90vh;
+    margin: 0;
+    padding: 0;
     overflow: auto;
-    background: var(--clr-primary-200);
+
+    background: linear-gradient(
+        to bottom,
+        var(--clr-primary-200) 80%,
+        transparent
+    );
 
     position: absolute;
     inset-inline: 0;
@@ -116,16 +120,23 @@
     padding-block: var(--padding-lg);
 
     transform: translateY(100%);
+    padding-block-end: 8rem;
     z-index: -1;
 }
 .navigation_menu > * + * {
     border-top: var(--clr-primary-400) 2px solid;
 }
+
 .navigation_menu a {
     display: inline-block;
     min-width: 100%;
     padding: var(--padding-lg) var(--padding-xl);
+    transition: background-color 250ms ease;
 }
+.navigation_menu a:hover {
+    background-color: var(--clr-primary-400);
+}
+
 .navigation_menu :global(.mobile-only) {
     display: none;
 }

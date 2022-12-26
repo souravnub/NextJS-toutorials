@@ -1,0 +1,36 @@
+.bodyOverlay {
+    background-color: rgba(0 0 0 / 0.5);
+    position: fixed;
+    inset: 0;
+
+    z-index: calc(var(--z-index-nav) - 5);
+}
+
+.bodyOverlay[data-state="shown"] {
+    animation: showBodyOverlay 250ms ease-in-out forwards;
+    display: block;
+}
+.bodyOverlay[data-state="hidding"] {
+    animation: hideBodyOverlay 250ms ease-in-out forwards;
+    display: block;
+}
+.bodyOverlay[data-state="hidden"] {
+    display: none;
+}
+
+@keyframes showBodyOverlay {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes hideBodyOverlay {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

@@ -4,6 +4,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import styles from "./nav.module.css";
 import Link from "next/link";
 import { useState } from "react";
+import BodyOverlay from "../body overlay/BodyOverlay";
 
 const Nav = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -18,89 +19,106 @@ const Nav = () => {
 
     const handleToggleNav = () => {
         // setIsNavOpen((prev) => !prev);
-
-        const navigationMenu = navigationMenuRef.current;
         if (isNavOpen) {
-            navigationMenu.setAttribute("data-state", "closing");
-            navigationMenuRef.current.addEventListener(
-                "animationend",
-                () => {
-                    navigationMenu.setAttribute("data-state", "closed");
-                },
-                { once: true }
-            );
-            setIsNavOpen(false);
+            closeNav();
         } else {
-            navigationMenu.setAttribute("data-state", "opened");
-            setIsNavOpen(true);
+            openNav();
         }
     };
 
+    const handleBodyOverlayClick = () => {
+        closeNav();
+    };
+
+    function openNav() {
+        const navigationMenu = navigationMenuRef.current;
+        document.body.style.overflow = "hidden";
+        navigationMenu.setAttribute("data-state", "opened");
+        setIsNavOpen(true);
+    }
+    function closeNav() {
+        const navigationMenu = navigationMenuRef.current;
+        document.body.style.overflow = "auto";
+        navigationMenu.setAttribute("data-state", "closing");
+        navigationMenuRef.current.addEventListener(
+            "animationend",
+            () => {
+                navigationMenu.setAttribute("data-state", "closed");
+            },
+            { once: true }
+        );
+        setIsNavOpen(false);
+    }
+
     return (
-        <nav
-            className={styles.nav}
-            ref={navRef}
-            style={{
-                backgroundColor: isNavOpen
-                    ? "var(--clr-primary-200)"
-                    : "var(--clr-primary-100)",
-            }}>
-            <button
-                className={`${styles.hammenu} ${
-                    isNavOpen ? styles.hammenuClose : ""
-                }`}
-                aria-controls="primary-navigation"
-                aria-expanded={isNavOpen ? "true" : "false"}
-                onClick={handleToggleNav}>
-                <span className="sr-only">Menu</span>
-                <div className="line" aria-hidden="true"></div>
-                <div className="line" aria-hidden="true"></div>
-            </button>
+        <>
+            <BodyOverlay onClick={handleBodyOverlayClick} isShown={isNavOpen} />
 
-            <Link href="/">Hunting Coder</Link>
-
-            <div className={styles.navUtilitiesContainer}>
+            <nav
+                className={styles.nav}
+                ref={navRef}
+                style={{
+                    backgroundColor: isNavOpen
+                        ? "var(--clr-primary-200)"
+                        : "var(--clr-primary-100)",
+                }}>
                 <button
-                    className={`${styles.notificationButton} ${
-                        haveNotifications ? "have-notifications" : ""
-                    }`}>
-                    <IoMdNotificationsOutline />
+                    className={`${styles.hammenu} ${
+                        isNavOpen ? styles.hammenuClose : ""
+                    }`}
+                    aria-controls="primary-navigation"
+                    aria-expanded={isNavOpen ? "true" : "false"}
+                    onClick={handleToggleNav}>
+                    <span className="sr-only">Menu</span>
+                    <div className="line" aria-hidden="true"></div>
+                    <div className="line" aria-hidden="true"></div>
                 </button>
 
-                <button className={styles.createBlogButton}>
-                    <IoCreateOutline />
-                    compose
-                </button>
-            </div>
+                <Link href="/">Hunting Coder</Link>
 
-            <ul
-                ref={navigationMenuRef}
-                id="primary-navigation"
-                role="list"
-                data-state="closed"
-                className={styles.navigation_menu}>
-                <li>
-                    <Link href="/">home</Link>
-                </li>
-                <li>
-                    <Link href="/about">about</Link>
-                </li>
-                <li>
-                    <Link href="/blog">blog</Link>
-                </li>
+                <div className={styles.navUtilitiesContainer}>
+                    <button
+                        className={`${styles.notificationButton} ${
+                            haveNotifications ? "have-notifications" : ""
+                        }`}>
+                        <IoMdNotificationsOutline />
+                    </button>
 
-                <li className="mobile-only">
-                    <Link href="/notifications">notifications</Link>
-                </li>
-                <li className="mobile-only">
-                    <Link href="/composeblog">compose</Link>
-                </li>
+                    <button className={styles.createBlogButton}>
+                        <IoCreateOutline />
+                        compose
+                    </button>
+                </div>
 
-                <li>
-                    <Link href="/contact">contact</Link>
-                </li>
-            </ul>
-        </nav>
+                <ul
+                    ref={navigationMenuRef}
+                    id="primary-navigation"
+                    role="list"
+                    data-state="closed"
+                    className={styles.navigation_menu}>
+                    <li>
+                        <Link href="/">home</Link>
+                    </li>
+                    <li>
+                        <Link href="/about">about</Link>
+                    </li>
+                    <li>
+                        <Link href="/blog">blog</Link>
+                    </li>
+
+                    <li className="mobile-only">
+                        <Link href="/notifications">notifications</Link>
+                    </li>
+                    <li className="mobile-only">
+                        <Link href="/composeblog">compose</Link>
+                    </li>
+
+                    <li>
+                        <Link href="/contact">contact</Link>
+                    </li>
+                </ul>
+            </nav>
+        </>
     );
 };
 
