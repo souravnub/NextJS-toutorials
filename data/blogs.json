@@ -7,6 +7,7 @@
         },
         "img": "https://picsum.photos/600/500?grayscale",
         "title": "Best way to make money faster",
+        "slug": "Best-way-to-make-money-faster",
         "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, magni esse eos eligendi iste quo quae facilis? Eveniet, ducimus maiores!",
         "read_time": "4 min",
         "topics": ["UI Design", "AI"],
@@ -19,7 +20,8 @@
             "role": "A frontend Developer at Google"
         },
         "img": "https://picsum.photos/600/500?grayscale",
-        "title": "Best way to make money faster",
+        "title": "Let me do it",
+        "slug": "let-me-do-it",
         "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, magni esse eos eligendi iste quo quae facilis? Eveniet, ducimus maiores!",
         "read_time": "4 min",
         "topics": ["UI Design", "AI"],
@@ -32,7 +34,8 @@
             "role": "Assistant at Softwares&"
         },
         "img": "https://picsum.photos/600/500?grayscale",
-        "title": "Best way to make money faster",
+        "title": "be the one",
+        "slug": "be-the-one",
         "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, magni esse eos eligendi iste quo quae facilis? Eveniet, ducimus maiores!",
         "read_time": "4 min",
         "topics": ["UI Design", "AI"],

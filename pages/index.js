@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,26 +10,35 @@ export default function Home({ blogs }) {
     return (
         <>
             {/* {JSON.stringify(blogs)} */}
-            {blogs.map(({ author, title, img, desc, read_time, topics }) => {
-                return (
-                    <div className={styles.blog} key={title}>
-                        <Image width={200} height={150} src={img} />
-                        <h1>{title}</h1>
-                        <p>{desc}</p>
-                        <span>{read_time}</span>
+            {blogs.map(
+                ({ author, title, img, desc, read_time, topics, slug }) => {
+                    return (
+                        <div className={styles.blog} key={title}>
+                            <Image width={200} height={150} src={img} />
+                            <h1>{title}</h1>
+                            <p>{desc}</p>
+                            <span>{read_time}</span>
 
-                        {topics.map((topic) => {
-                            return topic;
-                        })}
+                            {topics.map((topic) => {
+                                return topic;
+                            })}
 
-                        <Image
-                            src={author.profile_img}
-                            width={50}
-                            height={50}
-                        />
-                    </div>
-                );
-            })}
+                            <Image
+                                src={author.profile_img}
+                                width={50}
+                                height={50}
+                            />
+
+                            <Link
+                                href={{
+                                    pathname: "/blogs/" + slug,
+                                }}>
+                                read more...
+                            </Link>
+                        </div>
+                    );
+                }
+            )}
         </>
     );
 }

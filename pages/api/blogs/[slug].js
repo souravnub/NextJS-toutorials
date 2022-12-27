@@ -1,15 +1,21 @@
-import { readFile } from "fs";
+import { readFile } from "fs/promises";
+import path from "path";
 
-export default function (req, res) {
+export default async function (req, res) {
     const { slug } = req.query;
-    if (slug === "redirect") {
-        res.redirect(
-            // status code should be 307 if we want to redirect.
-            307,
-            "https://www.geeksforgeeks.org/express-js-res-redirect-function/"
+    try {
+        const result = await readFile(
+            path.join(process.cwd(), "data", "blogs.json"),
+            "utf-8"
         );
-        return;
+        const res_json = JSON.parse(result);
+        const blogs = res_json;
+        const blog = blogs.find(
+            (blog) => blog.slug.toLowerCase() === slug.toLowerCase()
+        );
+        res.json({ success: true, blog });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, blogs: null });
     }
-    // find a blog with associated slug and send in json
-    res.json({ blog: `blog relate to : ${slug}` });
 }
