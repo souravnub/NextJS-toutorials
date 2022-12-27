@@ -59,8 +59,8 @@ By default we cannot import a css file into any other component except \_app.js.
 
 Similarly, styleSheets like Bootstrap can only be imported in \_app.js, to use third-party styles in a single component : [using styles from third party source in single component](https://nextjs.org/docs/basic-features/built-in-css-support#import-styles-from-node_modules)
 
-2.**STYLED JSX :** we can use styled jsx in our components for modular scope of css. **_remember: we cannot use child class selectors in styledJSX_**, for extra info : [blog in styledJSX by nextjs](https://nextjs.org/blog/styling-next-with-styled-jsx). Using styled jsx, the styles would not collide if the styled jsx is not made global.
-Styled JSX is also in two formats :
+2. **STYLED JSX :** we can use styled jsx in our components for modular scope of css. **_remember: we cannot use child class selectors in styledJSX_**, for extra info : [blog in styledJSX by nextjs](https://nextjs.org/blog/styling-next-with-styled-jsx). Using styled jsx, the styles would not collide if the styled jsx is not made global.
+   Styled JSX is also in two formats :
 
 -   component scopped
 -   global scopped
@@ -182,3 +182,54 @@ Styled JSX is also in two formats :
 
     export default about;
     ```
+
+3. **BUILT-IN-API :** nextJs comes in with built-in api ... we can create API routes for our nextjs app from _pages/api_ folder.
+
+-   [USING LOCAL VARIABLES IN NEXTJS](https://nextjs.org/docs/basic-features/environment-variables)
+    -   if we want to use local variables in browser(i.e our nextjs app frontend) then the local variables in .env\* frile should be prefixed with NEXT*PUBLIC*<VARIABLE*NAME>, then using \*\*\*process.env.NEXT_PUBLIC*<variableName>\*\*\* we can use the variable in frontend.
+    -   The above point is not mandatory for using environmentvariables in nodejs (i.e in api files). The variables used in api route files need not to be prefixed with NEXT*PUBLIC* .
+        **Therefore :**
+    -   if we want to use DB_HOST variable in frontend then : name it -> **NEXT_PUBLIC_DB_HOST**
+    -   if we want to use DB_HOST variable in backend files : name it -> **DB_HOST**
+
+4. **PRE-RENDERING :** By default, Next.js pre-renders every page (using SSG without fetching data, if we want to fetch data with SSG then use getStaticProps). This means that Next.js generates HTML for each page in advance, instead of having it all done by client-side JavaScript. Pre-rendering can result in better performance and SEO.
+   mainly there are two types of pre-rendering techniques :
+
+-   **server-side-rendering (SSR)**
+-   **static-site-generation (SSG)**
+    **_more-info_** : [PRE-RENDERING WITH NEXTJS](https://nextjs.org/docs/basic-features/pages#pre-rendering)
+
+**_video-link_** : [PRE-RENDERING VIDEO - codeWithHarry](https://www.youtube.com/watch?v=rabU9vZBoTg&list=PLu0W_9lII9agtWvR_TZdb_r0dNI8-lDwG&index=21)
+
+-   static site generation is the one that is preffered to be used always.. because the HTML pages (with / without data) are created once when the site is built (not on each user's request)(hence these pages are static for real => until-n-unless the website is not built again using "yarn build" or "npm run build" => not deployed again, till then the data in these pages will not change (**the biggest drawback of SSG**)) and then these pages could be cached by a cdn.. hence these chached pages could be served instantly by the cdn to the user if he/she request for the page again.
+-   now static site generation is preffered because the pages generated could be chached...
+    -   but what if the content of a page is to be changed on each and every request ???? in this case we should not use SSG because the cached pages would not be updated with the new data until we run the build again...  
+        **_example :_**
+-   say for example netlify, when there is a change in github code then netlift runs the associated build command to the app/website... this is when SSG comes into play ... pages using SSG are built at this time (getStaticProps also runs at this time) and hence HTML pages with data are generated at this time....
+-   hence, these pages that are generated with static-stite-generation are not data friendly => the data would not be updated on each and every request of the user ...
+-   therefore the pages that demands the change in data on each and every request should not be made with SSG. But, what should be used instead ?
+    -   SSR - server side rendering could be used instead, as it generates the html page at each and every request (therefore fresh data is fetched from the backend on each and every request)
+    -   client side rendering (for data fetching) with combination of SSG can also be used
+    -   use incremental-static-site-generation
+-   therefore, SSG should be prefered always (because pages generated with it can be cached by CDN) ... but if the page requires fresh data then SSR or client-side-rendring should be used
+
+    ***
+
+**Static Generation (Recommended)**: The HTML is generated at **build time** and will be **reused** on each request. To make a page use Static Generation, either export the page component, or export getStaticProps (and getStaticPaths if necessary). It's great for pages that can be **_pre-rendered ahead of a user's request / chacehd pages shared from a CDN_** . You can also use it with Client-side Rendering to bring in additional data.
+
+-   **Workflow :**
+
+    1. Generates static HTML pages on server from nextjs code at build time (not at every request)
+    2. These pages are shared with CDN, which cache them.
+    3. Now the pages can be served to clients with blazzing fast speed
+
+-   **Diagram :**\
+     **client request -> CDN serves already cached pages (not server)**
+
+**Server-side Rendering**: The HTML is generated on each request. To make a page use Server-side Rendering, export getServerSideProps. Because Server-side Rendering results in slower performance than Static Generation, use this only if absolutely necessary.
+
+-   **Workflow :**
+    1. Generates static HTML pages on server from nextjs code at client request from fresh backend data. (takes some time in this process, therefore is slow as comparent to SSG)
+    2. These pages are then directly shared with client
+-   **Diagram :**\
+     **client request -> static HTML pages are generated on server -> static pages along with js to make page interactive are shipped to client**
