@@ -6,7 +6,7 @@ const SingleBlog = ({ blog }) => {
 
 export async function getServerSideProps({ params }) {
     const res = await fetch(
-        `http://192.168.100.248:3000/api/blogs/${params.slug}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${params.slug}`
     );
     const { blog } = await res.json();
     return {

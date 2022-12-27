@@ -44,7 +44,7 @@ export default function Home({ blogs }) {
 }
 
 export async function getServerSideProps(context) {
-    const res = await fetch("http://192.168.100.248:3000/api/blogs");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
     const resJSON = await res.json();
     return {
         props: { blogs: resJSON.blogs }, // will be passed to the page component as props
