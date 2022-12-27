@@ -7,6 +7,7 @@ import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ blogs }) {
+    // the page source would have all the blogs ... as the page is pre-rendered using server-side-rendering therefore no issue with SEO ... (but using SSG in this case would have been more good [came to know it afterwards])
     return (
         <>
             {/* {JSON.stringify(blogs)} */}
