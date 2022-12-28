@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+import Link from "next/link";
 
 const SingleBlog = ({ blog: fetchedBlog }) => {
     const [blog, setBlog] = useState(fetchedBlog);
-    return <div>{JSON.stringify(blog)}</div>;
+    return (
+        <div>
+            {JSON.stringify(blog)}
+            <h1>
+                <Link href="/">Home</Link>
+            </h1>
+        </div>
+    );
 };
 
 export async function getServerSideProps(context) {

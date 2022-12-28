@@ -2,6 +2,8 @@ import React from "react";
 import styles from "../../styles/Home.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { readFile } from "fs/promises";
+import path from "path";
 
 const BlogsPage = ({ blogs }) => {
     return (
@@ -40,19 +42,18 @@ const BlogsPage = ({ blogs }) => {
     );
 };
 
-export async function getServerSideProps(context) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
-    try {
-        const data = await res.json();
+export async function getStaticProps(context) {
+    // have to replace the api call with login because api will not be ready at build time
 
-        return {
-            props: data, // will be passed to the page component as props
-        };
-    } catch (error) {
-        return {
-            notFound: true,
-        };
-    }
+    const blogs = await readFile(
+        path.join(process.cwd(), "data", "blogs.json"),
+        "utf-8"
+    );
+    const blogJson = JSON.parse(blogs);
+
+    return {
+        props: { success: true, blogs: blogJson }, // will be passed to the page component as props
+    };
 }
 
 export default BlogsPage;
