@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 
-import { blogs } from "../Data/blogs";
+import blogsFromDatabase from "../Data/blogs";
 import { authorData } from "../Data/author";
 
 import { FiSearch } from "react-icons/fi";
@@ -11,10 +11,12 @@ import styles from "../styles/Home.module.css";
 
 import BlogsContainer from "../components/blogs/blogs container/BlogsContainer";
 
-export default function Home() {
+export default function Home({ blogs: propBlogs }) {
     const serachInputRef = useRef(null);
 
     const [currentBlogsType, setCurrentBlogsType] = useState("all");
+    const [blogs, setBlogs] = useState(propBlogs);
+
     const DROPDOWN_OPTIONS = ["all", "following", "popular", "latest"];
     const onOptionChangeHandler = (e) => {
         // on option change request to backend should be made for blogs
@@ -24,6 +26,10 @@ export default function Home() {
         e.preventDefault();
         const searchVal = serachInputRef.current.value;
         // get blogs related to search value and pass to BlogsContainer
+        console.log(searchVal);
+    };
+    const handleTopicSelect = (e) => {
+        serachInputRef.current.value = e.target.innerText;
     };
 
     // backend request for blogs will be here and then will be passed into BlogsContainer component
@@ -51,6 +57,7 @@ export default function Home() {
                                 return (
                                     <button
                                         key={topic}
+                                        onClick={handleTopicSelect}
                                         className="button_primary_pill">
                                         {topic}
                                     </button>
@@ -104,4 +111,10 @@ export default function Home() {
             </aside>
         </main>
     );
+}
+
+export async function getServerSideProps(context) {
+    return {
+        props: { blogs: blogsFromDatabase },
+    };
 }

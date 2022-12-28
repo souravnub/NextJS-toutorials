@@ -29,11 +29,13 @@
     position: relative;
 }
 .search_input_container input {
+    font-weight: 500;
     padding: var(--padding-sm) var(--padding-lg);
     padding-inline-start: var(--spacing-for-button);
     border-radius: 100vh;
     border: 1.6px solid var(--clr-primary-600);
     font-size: 0.85rem;
+    color: var(--clr-primary-1000);
 }
 .search_input_container button {
     position: absolute;

@@ -5,11 +5,15 @@
     --padding-lg: 1rem;
     --padding-xl: 1.4rem;
 
-    --fs-xs: 0.4rem;
+    --fs-xs: 0.8rem;
     --fs-sm: 0.9rem;
     --fs-md: 1.3rem;
     --fs-lg: 1.5rem;
     --fs-xl: 1.8rem;
+
+    --ff-primary: "Poppins", sans-serif;
+    --ff-secondary: "Roboto", sans-serif;
+    --ff-tertiary: "Open Sans", sans-serif;
 
     --clr-primary-100: white;
     --clr-primary-200: rgb(247, 247, 247);
@@ -19,7 +23,7 @@
     --clr-primary-600: rgb(187, 187, 187);
     --clr-primary-800: rgb(170, 170, 170);
     --clr-primary-900: rgb(91, 91, 91);
-    --clr-primary-1000: rgb(29, 29, 29);
+    --clr-primary-1000: rgb(31, 31, 31);
 
     --clr-hover-300: rgb(229, 229, 229);
     --clr-hover-400: rgb(220, 220, 220);
@@ -67,7 +71,7 @@ body {
     min-height: 100vh;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--ff-primary);
 }
 
 /* A elements that don't have a class get default styles */
@@ -100,6 +104,9 @@ button {
 a {
     text-decoration: none;
     color: inherit;
+}
+p {
+    text-align: justify;
 }
 
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
@@ -136,7 +143,7 @@ a {
 .button_border_box,
 .button_primary_pill,
 .button_border_pill {
-    padding: var(--padding-sm) var(--padding-xl);
+    padding: var(--padding-md) var(--padding-xl);
     color: var(--clr-primary-1000);
     font-weight: 500;
     font-size: calc(var(--fs-sm) - 0.1rem);
