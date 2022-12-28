@@ -232,6 +232,15 @@ Similarly, styleSheets like Bootstrap can only be imported in \_app.js, to use t
 
 **Static Generation (Recommended)**: The HTML is generated at **build time** and will be **reused** on each request. To make a page use Static Generation, either export the page component, or export getStaticProps (and getStaticPaths if necessary). It's great for pages that can be **_pre-rendered ahead of a user's request / chacehd pages shared from a CDN_** . You can also use it with Client-side Rendering to bring in additional data.
 
+_getStaticProps might not be enough_ : If we have a page using SSG that just needs data to be fetched while site is being built then we can tell this to nextjs just by using getStaticProps. But if the page is not a simple one,
+but a dynamic one then only getStaticProps would not be enough.Then we need to tell nextjs that which pages (dynamic pages) should use SSG. For this purpose we need to use **getStaticPaths** which tell nextjs that which dynamic pages are to be pre-rendered using SSG.
+We could do this manually and automatically also. In the codebase in **_pages/blogs/[slug].js_** it is done automatically.
+Therefore: \
+_getStaticPaths :_ Tells which dynamic pages are to be pre-rendered using SSG.\
+_getStaticProps :_ Sends data in as props to the page after fetching them from backend.\
+
+Hence we cannot use _getStaticPaths_ without _getStaticProps_ , but vice-versa is not true.
+
 -   **Workflow :**
 
     1. Generates static HTML pages on server from nextjs code at build time (not at every request)
@@ -298,6 +307,38 @@ export async function getStaticProps(context) {
         props: { blogs: blogJson },
     };
 }
+```
+
+Now we can build the nextjs application and make the nextjs to generate a directory (called out) that contains all the pages converted into static files and these files can be hosted as a stand-alone website. Hence, the **out/** directory so generated will contain the static site for the nextjs code that we wrote.\
+
+To create the static site, follow this link : [generating static HTML site from nextjs Code](https://nextjs.org/docs/advanced-features/static-html-export#next-export)
+
+But the build and export might result in some errors .. to overcome these errors we have to remove all the [unsupported features](https://nextjs.org/docs/advanced-features/static-html-export#unsupported-features) \
+ex. nextjs<Image> component would not be supported in HTML site so generated,, therefore will have to change all the <Image> components in nextjs application with normal <img> tags.
+also getServerSideProps will also cause error.. because it cannot be used in static site
+
+also we will encounter an error when we will reload the page on this static site ....
+to fix it we need to change **_next.config.js_** file
+
+_next.config.js_
+
+```js
+const nextConfig = {
+    reactStrictMode: true,
+
+    // make trailingSlash true
+    trailingSlash: true,
+
+    images: {
+        domains: [
+            "sourav-main-portfolio.netlify.app",
+            "picsum.photos",
+            "100k-faces.glitch.me",
+        ],
+    },
+};
+
+module.exports = nextConfig;
 ```
 
 ---
