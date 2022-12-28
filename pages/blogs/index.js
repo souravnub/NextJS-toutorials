@@ -2,8 +2,7 @@ import React from "react";
 import styles from "../../styles/Home.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import { readFile } from "fs/promises";
-import path from "path";
+import loadJsonFile from "../../utils/loadJsonFile";
 
 const BlogsPage = ({ blogs }) => {
     return (
@@ -45,14 +44,10 @@ const BlogsPage = ({ blogs }) => {
 export async function getStaticProps(context) {
     // have to replace the api call with login because api will not be ready at build time
 
-    const blogs = await readFile(
-        path.join(process.cwd(), "data", "blogs.json"),
-        "utf-8"
-    );
-    const blogJson = JSON.parse(blogs);
+    const blogs = await loadJsonFile("/data/blogs.json");
 
     return {
-        props: { success: true, blogs: blogJson }, // will be passed to the page component as props
+        props: { success: true, blogs }, // will be passed to the page component as props
     };
 }
 

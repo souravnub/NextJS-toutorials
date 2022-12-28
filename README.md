@@ -28,6 +28,21 @@ the above code will set the title of the page to **_Hello_**
    fill property could be used, which gives the Image a position of absolute wrt to parent. Therefore we have to make the parent relative and give it a size. Also we can use object-fit property of css on the parent container.
    **you will find most relevant info in video link below. So do check it out.**
 
+Also the **_src_** of the images can be directly set without importing the image into the file...\
+_the pubic folder is servered directly => all the directories and files in public folder would be accessible in codebase with corrseponding relative paths to the public folder_\
+
+_Case 1:_ image.png is present directly in **public/image.png**
+
+```js
+<Image src="/image.png">
+```
+
+_Case 2:_ image.png is present in some other directory in public folder **public/assets/image.png**
+
+```js
+<Image src='/assets/image.png'>
+```
+
 -   _more info :_ [NextJS Image component](https://nextjs.org/docs/api-reference/next/image)
 -   _viedo link :_ [Video for NextJS Image Component](https://www.youtube.com/watch?v=2U7yZ3wvFBM)
 
@@ -226,6 +241,68 @@ Similarly, styleSheets like Bootstrap can only be imported in \_app.js, to use t
 -   **Diagram :**\
      **client request -> CDN serves already cached pages (not server)**
 
+**_Remember :_** We cannot directly use SSG ,if we are using built in nextjs API for calling our api routes. As at build time our server would not be avaiable as it is also being built, therefore calling any api route in getStaticProps would not work.\
+code example :
+
+**_non-working code example_**
+
+```js
+export async function getStaticProps(context) {
+    // ${process.env.NEXT_PUBLIC_API_URL}/api/blogs will not be ready on build, therefor will not get any response from backend api made using nextjs
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
+    const data = await res.json();
+
+    return {
+        props: data,
+    };
+}
+```
+
+**_working code example :_**
+
+_pages/api/blogs/index.js_
+
+```js
+import { readFile } from "fs/promises";
+import path from "path";
+
+export default async function (req, res) {
+    try {
+        const blogs = await readFile(
+            path.join(process.cwd(), "data", "blogs.json"),
+            "utf-8"
+        );
+        const blogJson = JSON.parse(blogs);
+        res.json({ success: true, blogs: blogJson });
+    } catch (error) {
+        res.json({ success: false, blogs: null });
+    }
+}
+```
+
+_pages/blogs/index.js_
+
+```js
+// the below approach will work !
+export async function getStaticProps(context) {
+    // ${process.env.NEXT_PUBLIC_API_URL}/api/blogs will not be ready on build, therefor will not get any response from backend api made using nextjs
+
+    const blogs = await readFile(
+        path.join(process.cwd(), "data", "blogs.json"),
+        "utf-8"
+    );
+    const blogJson = JSON.parse(blogs);
+
+    return {
+        props: { blogs: blogJson },
+    };
+}
+```
+
+---
+
+\
 **Server-side Rendering**: The HTML is generated on each request. To make a page use Server-side Rendering, export getServerSideProps. Because Server-side Rendering results in slower performance than Static Generation, use this only if absolutely necessary.
 
 -   **Workflow :**
