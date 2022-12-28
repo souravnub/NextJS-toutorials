@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../styles/Home.module.css";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import loadJsonFile from "../../utils/loadJsonFile";
 
 const BlogsPage = ({ blogs }) => {
@@ -12,7 +12,8 @@ const BlogsPage = ({ blogs }) => {
                 ({ author, title, img, desc, read_time, topics, slug }) => {
                     return (
                         <div className={styles.blog} key={title}>
-                            <Image width={200} height={150} src={img} />
+                            {/* <Image width={200} height={150} src={img} /> */}
+                            <img width={200} height={150} src={img} />
                             <h1>{title}</h1>
                             <p>{desc}</p>
                             <span>{read_time}</span>
@@ -21,7 +22,12 @@ const BlogsPage = ({ blogs }) => {
                                 return topic;
                             })}
 
-                            <Image
+                            {/* <Image
+                                src={author.profile_img}
+                                width={50}
+                                height={50}
+                            /> */}
+                            <img
                                 src={author.profile_img}
                                 width={50}
                                 height={50}

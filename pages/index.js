@@ -1,8 +1,9 @@
 import Head from "next/head";
-import Image from "next/image";
+// import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import loadJsonFile from "../utils/loadJsonFile";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,8 @@ export default function Home({ blogs }) {
                 ({ author, title, img, desc, read_time, topics, slug }) => {
                     return (
                         <div className={styles.blog} key={title}>
-                            <Image width={200} height={150} src={img} />
+                            {/* <Image width={200} height={150} src={img} /> */}
+                            <img src={img} alt="" width={200} height={150} />
                             <h1>{title}</h1>
                             <p>{desc}</p>
                             <span>{read_time}</span>
@@ -24,7 +26,7 @@ export default function Home({ blogs }) {
                                 return topic;
                             })}
 
-                            <Image
+                            <img
                                 src={author.profile_img}
                                 width={50}
                                 height={50}
@@ -44,10 +46,12 @@ export default function Home({ blogs }) {
     );
 }
 
-export async function getServerSideProps(context) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
-    const resJSON = await res.json();
+export async function getStaticProps(context) {
+    // have to replace the api call with login because api will not be ready at build time
+
+    const blogs = await loadJsonFile("/data/blogs.json");
+
     return {
-        props: { blogs: resJSON.blogs }, // will be passed to the page component as props
+        props: { success: true, blogs }, // will be passed to the page component as props
     };
 }
