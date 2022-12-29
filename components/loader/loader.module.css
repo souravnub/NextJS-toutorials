@@ -1,0 +1,23 @@
+.loader_container {
+    --loader-font-size: var(--fs-xs);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loader_text_container {
+    display: flex;
+    gap: 0.1rem;
+
+    font-weight: 500;
+    font-size: var(--loader-font-size);
+}
+.loader_dots_container {
+    display: flex;
+    gap: 0.1rem;
+}
+.loader_dots_container > span {
+    scale: 1.2;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}

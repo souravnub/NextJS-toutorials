@@ -1,9 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Loader from "../../loader/loader";
 import styles from "./blogsContainer.module.css";
 
-const BlogsContainer = ({ blogs }) => {
+const BlogsContainer = ({ blogs, isLoading, fullDiscription }) => {
+    if (isLoading) {
+        return (
+            <div className={styles.blog_loader}>
+                <Loader text="Loading blogs" />
+            </div>
+        );
+    }
+
     return (
         <div className={styles.main_blogs_container}>
             {blogs.map(
@@ -49,7 +58,11 @@ const BlogsContainer = ({ blogs }) => {
                             <div className={styles.blog_content_container}>
                                 <div className={styles.blog_info_container}>
                                     <h2>{title}</h2>
-                                    <p>{desc}</p>
+                                    <p>
+                                        {fullDiscription
+                                            ? desc
+                                            : `${desc.substring(0, 100)}...`}
+                                    </p>
 
                                     <div
                                         className={

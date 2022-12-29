@@ -41,6 +41,7 @@ export default function Home({ blogs: propBlogs }) {
                         <form onSubmit={handleBlogSearch}>
                             <input
                                 type="text"
+                                required={true}
                                 ref={serachInputRef}
                                 placeholder="Search..."
                             />
@@ -84,7 +85,11 @@ export default function Home({ blogs: propBlogs }) {
                             </select>
                         </div>
                     </div>
-                    <BlogsContainer blogs={blogs} isLoading={false} />
+                    <BlogsContainer
+                        blogs={blogs}
+                        isLoading={true}
+                        fullDiscription={false}
+                    />
                 </article>
             </section>
 
