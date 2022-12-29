@@ -5,8 +5,11 @@ import styles from "./nav.module.css";
 import Link from "next/link";
 import { useState } from "react";
 import BodyOverlay from "../body overlay/BodyOverlay";
+import { useRouter } from "next/router";
 
 const Nav = () => {
+    const router = useRouter();
+
     const [isNavOpen, setIsNavOpen] = useState(false);
     const [haveNotifications, setHaveNotifications] = useState(true);
     const navRef = useRef();
@@ -16,6 +19,10 @@ const Nav = () => {
         const navHeight = navRef.current.getBoundingClientRect().height;
         document.body.style.paddingBlockStart = navHeight + "px";
     }, []);
+
+    useEffect(() => {
+        closeNav();
+    }, [router.pathname]);
 
     const handleToggleNav = () => {
         // setIsNavOpen((prev) => !prev);
