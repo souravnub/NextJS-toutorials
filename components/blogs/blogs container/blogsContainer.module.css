@@ -12,6 +12,9 @@
     gap: var(--padding-lg);
     padding-block: calc(var(--padding-xl) + 0.5rem);
 }
+.blog_loader {
+    margin-block-start: var(--padding-lg);
+}
 
 .main_blogs_container > .blog:nth-of-type(1)::before {
     content: "";

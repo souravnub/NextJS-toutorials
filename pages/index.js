@@ -76,7 +76,6 @@ export default function Home({ blogs: propBlogs }) {
                         <div className={styles.select_container}>
                             <TbChevronDown />
                             <select onChange={onOptionChangeHandler}>
-                                {/* <option>Please choose one option</option> */}
                                 {DROPDOWN_OPTIONS.map((option, index) => {
                                     return (
                                         <option key={index}>{option}</option>
@@ -87,7 +86,7 @@ export default function Home({ blogs: propBlogs }) {
                     </div>
                     <BlogsContainer
                         blogs={blogs}
-                        isLoading={true}
+                        isLoading={false}
                         fullDiscription={false}
                     />
                 </article>
