@@ -1,6 +1,7 @@
 const blogs = [
     {
         author: {
+            id: "2",
             profile_img:
                 "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhY2V8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
             name: "Chintan Bhagat",
@@ -18,6 +19,7 @@ const blogs = [
     },
     {
         author: {
+            id: "3",
             profile_img:
                 "https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGZhY2V8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
             name: "Christan Lorem",
@@ -35,6 +37,7 @@ const blogs = [
     },
     {
         author: {
+            id: "4",
             profile_img:
                 "https://images.unsplash.com/photo-1544348817-5f2cf14b88c8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fGZhY2V8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
             name: "Stone Martin",

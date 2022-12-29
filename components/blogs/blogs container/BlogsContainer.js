@@ -27,7 +27,7 @@ const BlogsContainer = ({ blogs, isLoading, fullDiscription }) => {
                     createdAt,
                 }) => {
                     return (
-                        <article className={styles.blog}>
+                        <article className={styles.blog} key={slug}>
                             <div className={styles.author_section_container}>
                                 <Image
                                     src={author.profile_img}
@@ -93,7 +93,8 @@ const BlogsContainer = ({ blogs, isLoading, fullDiscription }) => {
                                     className={styles.blog_img}
                                     src={img}
                                     width={250}
-                                    height={150}
+                                    height={170}
+                                    alt="blog banner"
                                 />
                             </div>
                         </article>

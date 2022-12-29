@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import blogsFromDatabase from "../Data/blogs";
-import { authorData } from "../Data/author";
+import { userData } from "../Data/user";
 
 import { FiSearch } from "react-icons/fi";
 import { TbChevronDown } from "react-icons/tb";
@@ -10,26 +10,44 @@ import { TbChevronDown } from "react-icons/tb";
 import styles from "../styles/Home.module.css";
 
 import BlogsContainer from "../components/blogs/blogs container/BlogsContainer";
+import fetchBlogs from "../utils/fetchBlogs";
 
 export default function Home({ blogs: propBlogs }) {
     const serachInputRef = useRef(null);
 
     const [currentBlogsType, setCurrentBlogsType] = useState("all");
     const [blogs, setBlogs] = useState(propBlogs);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     const DROPDOWN_OPTIONS = ["all", "following", "popular", "latest"];
-    const onOptionChangeHandler = (e) => {
-        // on option change request to backend should be made for blogs
-        console.log("option selected :" + e.target.value);
-    };
+
     const handleBlogSearch = (e) => {
         e.preventDefault();
         const searchVal = serachInputRef.current.value;
-        // get blogs related to search value and pass to BlogsContainer
+        // get blogs related to search value and set blogs
         console.log(searchVal);
     };
     const handleTopicSelect = (e) => {
         serachInputRef.current.value = e.target.innerText;
+    };
+    const getBlogs = async (blogsType) => {
+        setIsLoading(true);
+
+        const { success, blogs } = await fetchBlogs({
+            type: blogsType,
+            following: blogsType === "following" && userData.following,
+        });
+
+        setIsLoading(false);
+
+        if (success === true) {
+            setIsError(false);
+            setBlogs(blogs);
+        } else {
+            setIsError(true);
+            setBlogs(null);
+        }
     };
 
     // backend request for blogs will be here and then will be passed into BlogsContainer component
@@ -54,7 +72,7 @@ export default function Home({ blogs: propBlogs }) {
                     <article className={styles.my_topics_container}>
                         <span>My topics :</span>
                         <div className={styles.topic_select_buttons_container}>
-                            {authorData.searched_topics.map((topic) => {
+                            {userData.searched_topics.map((topic) => {
                                 return (
                                     <button
                                         key={topic}
@@ -71,11 +89,15 @@ export default function Home({ blogs: propBlogs }) {
                 <article className={styles.main_blog_container}>
                     <div
                         className={styles.blog_container_top_section_container}>
-                        <h3>Articles</h3>
+                        <h3>Articles : {currentBlogsType}</h3>
 
                         <div className={styles.select_container}>
                             <TbChevronDown />
-                            <select onChange={onOptionChangeHandler}>
+                            <select
+                                onChange={(e) => {
+                                    setCurrentBlogsType(e.target.value);
+                                    getBlogs(e.target.value);
+                                }}>
                                 {DROPDOWN_OPTIONS.map((option, index) => {
                                     return (
                                         <option key={index}>{option}</option>
@@ -86,7 +108,7 @@ export default function Home({ blogs: propBlogs }) {
                     </div>
                     <BlogsContainer
                         blogs={blogs}
-                        isLoading={false}
+                        isLoading={isLoading}
                         fullDiscription={false}
                     />
                 </article>
