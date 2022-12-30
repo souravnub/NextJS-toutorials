@@ -15,7 +15,9 @@ const BlogsContainer = ({ blogs, isLoading, fullDiscription }) => {
     return (
         <div className={styles.main_blogs_container}>
             {blogs.map((blog) => {
-                return <Blog data={{ ...blog, fullDiscription }} />;
+                return (
+                    <Blog data={{ ...blog, fullDiscription }} key={blog.slug} />
+                );
             })}
         </div>
     );

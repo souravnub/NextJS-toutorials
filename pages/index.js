@@ -10,15 +10,20 @@ import { TbChevronDown } from "react-icons/tb";
 import styles from "../styles/Home.module.css";
 
 import BlogsContainer from "../components/blogs/blogs container/BlogsContainer";
-import fetchBlogs from "../utils/fetchBlogs";
+import useGetBlogs from "../hooks/useGetBlogs";
 
 export default function Home({ blogs: propBlogs }) {
     const serachInputRef = useRef(null);
 
     const [currentBlogsType, setCurrentBlogsType] = useState("all");
-    const [blogs, setBlogs] = useState(propBlogs);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+
+    let { blogs, isLoading, isError } = useGetBlogs(
+        {
+            type: currentBlogsType,
+            initialBlogs: propBlogs,
+        },
+        [currentBlogsType]
+    );
 
     const DROPDOWN_OPTIONS = ["all", "following", "popular", "latest"];
 
@@ -30,24 +35,6 @@ export default function Home({ blogs: propBlogs }) {
     };
     const handleTopicSelect = (e) => {
         serachInputRef.current.value = e.target.innerText;
-    };
-    const getBlogs = async (blogsType) => {
-        setIsLoading(true);
-
-        const { success, blogs } = await fetchBlogs({
-            type: blogsType,
-            following: blogsType === "following" && userData.following,
-        });
-
-        setIsLoading(false);
-
-        if (success === true) {
-            setIsError(false);
-            setBlogs(blogs);
-        } else {
-            setIsError(true);
-            setBlogs(null);
-        }
     };
 
     // backend request for blogs will be here and then will be passed into BlogsContainer component
@@ -96,7 +83,6 @@ export default function Home({ blogs: propBlogs }) {
                             <select
                                 onChange={(e) => {
                                     setCurrentBlogsType(e.target.value);
-                                    getBlogs(e.target.value);
                                 }}>
                                 {DROPDOWN_OPTIONS.map((option, index) => {
                                     return (
