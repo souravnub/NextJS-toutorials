@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { userData } from "../Data/user";
 import fetchBlogs from "../utils/fetchBlogs";
 import useNotInitialRender from "./useNotInitialRender";
 
+// todo : what if there is no dependency arr ????/
 export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
     const notInitialRender = useNotInitialRender();
 
@@ -11,6 +12,7 @@ export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
     const [isError, setIsError] = useState(false);
 
     const getBlogs = async (blogsType) => {
+        console.log("requesting");
         setIsLoading(true);
 
         try {
@@ -34,9 +36,20 @@ export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
     };
 
     useEffect(() => {
-        // each and every useeffect fires on initial render (page reloads)
-        if (notInitialRender) getBlogs(type);
+        // [] === [] : false...therefore previous approach was wrong
+        if (Array.isArray(dependencyArr) && dependencyArr.length === 0) {
+            getBlogs(type);
+        }
+
+        // each and every useeffect fires on initial render (page reloads),, therefore if we want that if dependency is provided then run fetch blogs only then
+        if (notInitialRender) {
+            getBlogs(type);
+        }
     }, dependencyArr);
 
-    return { blogs, isLoading, isError };
+    return {
+        blogs,
+        isLoading,
+        isError,
+    };
 }

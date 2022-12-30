@@ -112,7 +112,7 @@ const Nav = () => {
                         <Link href="/about">about</Link>
                     </li>
                     <li>
-                        <Link href="/blog">blog</Link>
+                        <Link href="/blogposts">blog posts</Link>
                     </li>
 
                     <li className="mobile-only">
