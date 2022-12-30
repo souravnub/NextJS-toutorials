@@ -21,7 +21,9 @@ const Nav = () => {
     }, []);
 
     useEffect(() => {
-        closeNav();
+        if (isNavOpen) {
+            closeNav();
+        }
     }, [router.pathname]);
 
     const handleToggleNav = () => {
