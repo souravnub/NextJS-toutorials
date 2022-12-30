@@ -13,23 +13,28 @@ export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
     const getBlogs = async (blogsType) => {
         setIsLoading(true);
 
-        const { success, blogs } = await fetchBlogs({
-            type: blogsType,
-            following: blogsType === "following" && userData.following,
-        });
+        try {
+            const { success, blogs } = await fetchBlogs({
+                type: blogsType,
+                following: blogsType === "following" && userData.following,
+            });
+
+            if (success === true) {
+                setIsError(false);
+                setBlogs(blogs);
+            } else {
+                setIsError(true);
+                setBlogs(null);
+            }
+        } catch (error) {
+            setIsError(true);
+        }
 
         setIsLoading(false);
-
-        if (success === true) {
-            setIsError(false);
-            setBlogs(blogs);
-        } else {
-            setIsError(true);
-            setBlogs(null);
-        }
     };
 
     useEffect(() => {
+        // each and every useeffect fires on initial render (page reloads)
         if (notInitialRender) getBlogs(type);
     }, dependencyArr);
 

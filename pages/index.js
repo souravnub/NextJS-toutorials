@@ -95,6 +95,7 @@ export default function Home({ blogs: propBlogs }) {
                     <BlogsContainer
                         blogs={blogs}
                         isLoading={isLoading}
+                        isError={isError}
                         fullDiscription={false}
                     />
                 </article>
