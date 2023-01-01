@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 import blogsFromDatabase from "../Data/blogs";
@@ -9,7 +9,7 @@ import { TbChevronDown } from "react-icons/tb";
 
 import styles from "../styles/Home.module.css";
 
-import BlogsContainer from "../components/blogs/blogs container/BlogsContainer";
+import BlogsContainer from "../components/blogs container/BlogsContainer";
 import useGetBlogs from "../hooks/useGetBlogs";
 
 export default function Home({ blogs: propBlogs }) {

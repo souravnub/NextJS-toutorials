@@ -3,7 +3,6 @@ import { userData } from "../Data/user";
 import fetchBlogs from "../utils/fetchBlogs";
 import useNotInitialRender from "./useNotInitialRender";
 
-// todo : what if there is no dependency arr ????/
 export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
     const notInitialRender = useNotInitialRender();
 
@@ -36,7 +35,6 @@ export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
     };
 
     useEffect(() => {
-        // [] === [] : false...therefore previous approach was wrong
         if (Array.isArray(dependencyArr) && dependencyArr.length === 0) {
             getBlogs(type);
         }
