@@ -143,6 +143,9 @@ p {
 .button_border_box,
 .button_primary_pill,
 .button_border_pill {
+    min-width: max-content;
+    text-align: center;
+
     padding: var(--padding-md) var(--padding-xl);
     color: var(--clr-primary-1000);
     font-weight: 500;

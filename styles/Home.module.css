@@ -63,6 +63,7 @@
 
 .topic_select_buttons_container {
     display: flex;
+    width: 100%;
     gap: var(--padding-sm);
 }
 
@@ -149,7 +150,7 @@
 /* 1110px - 69.375rem */
 @media screen and (max-width: 69.375rem) {
     .main_container {
-        grid-template-columns: 1fr 350px;
+        grid-template-columns: 0.6fr 0.4fr;
     }
 
     .search_content_container {
@@ -195,5 +196,9 @@
     }
     .search_input_container button {
         top: 45%;
+    }
+
+    .topic_select_buttons_container > * {
+        flex: 1;
     }
 }

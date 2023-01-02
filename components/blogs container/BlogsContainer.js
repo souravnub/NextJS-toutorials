@@ -74,19 +74,24 @@ const BlogsContainer = ({ blogs, isLoading, isError, fullDiscription }) => {
 
                                     <div
                                         className={
-                                            styles.blog_topics_container
+                                            styles.blog_bottom_btn_container
                                         }>
-                                        {topics.map((topic) => {
-                                            return (
-                                                <div
-                                                    className="button_primary_pill"
-                                                    key={topic}>
-                                                    {topic}
-                                                </div>
-                                            );
-                                        })}
-                                        <div className="button_primary_pill">
-                                            {read_time} read
+                                        <div
+                                            className={
+                                                styles.blogs_topics_container
+                                            }>
+                                            {topics.map((topic) => {
+                                                return (
+                                                    <div
+                                                        className="button_primary_pill"
+                                                        key={topic}>
+                                                        {topic}
+                                                    </div>
+                                                );
+                                            })}
+                                            <div className="button_primary_pill">
+                                                {read_time} read
+                                            </div>
                                         </div>
 
                                         <Link
