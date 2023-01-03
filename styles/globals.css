@@ -151,7 +151,7 @@ p {
     font-weight: 500;
     font-size: calc(var(--fs-sm) - 0.1rem);
 
-    transition: background-color 250ms ease;
+    transition: background-color 250ms ease, opacity 250ms ease-in-out;
 }
 
 .button_primary_pill {
@@ -185,4 +185,11 @@ p {
 }
 .button_primary_pill:hover {
     background-color: var(--clr-hover-300);
+}
+
+.button_border_box:disabled,
+.button_border_pill:disabled,
+.button_primary_box:disabled,
+.button_primary_pill:disabled {
+    opacity: 0.5;
 }
