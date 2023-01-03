@@ -1,0 +1,93 @@
+.main_blog_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    max-width: 66rem;
+    margin-inline: auto;
+
+    padding: 3rem var(--padding-xl);
+}
+
+.main_blog_container > *:not(img) {
+    padding-inline: 10%;
+}
+
+.blog_creation_date {
+    opacity: 0.56;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+}
+
+.main_blog_container > h1 {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    margin-block-start: var(--padding-lg);
+}
+
+.author_info_container {
+    display: flex;
+    gap: var(--padding-sm);
+    align-items: center;
+
+    font-family: var(--ff-tertiary);
+    font-weight: 600;
+    font-size: var(--fs-xs);
+    color: var(--clr-primary-900);
+
+    margin-block-start: var(--padding-xs);
+}
+
+.author_info_container > svg {
+    font-size: var(--fs-lg);
+    color: var(--clr-primary-1000);
+}
+.topics_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--padding-lg);
+    margin-block-start: var(--padding-xl);
+}
+
+.topics_container :global(.button_primary_box) {
+    border-radius: 0.1em;
+    background-color: var(--clr-primary-300);
+    padding-block: var(--padding-sm);
+    padding-inline: var(--padding-lg);
+}
+
+.main_blog_container > img {
+    margin-block-start: 3rem;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5em;
+}
+
+.main_blog_container > h4 {
+    font-weight: 500;
+    font-size: var(--fs-md);
+    margin-block-start: var(--padding-xl);
+    text-align: justify;
+}
+.main_blog_container > p {
+    font-size: var(--fs-sm);
+    opacity: 0.9;
+    text-align: justify;
+    margin-block-start: var(--padding-lg);
+}
+
+@media screen and (max-width: 700px) {
+    .main_blog_container > *:not(img) {
+        padding-inline: 0;
+    }
+    .main_blog_container > p {
+        /* font-size: var(--fs-xs); */
+    }
+    .main_blog_container > h4 {
+        font-weight: 500;
+        /* font-size: var(--fs-sm); */
+    }
+}

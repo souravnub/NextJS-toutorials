@@ -1,8 +1,7 @@
 import React from "react";
 import blogs from "../../Data/blogs";
-
 const BlogsPage = ({ blogs }) => {
-    return <div></div>;
+    return <div>blogsPage</div>;
 };
 
 export async function getServerSideProps(context) {

@@ -6,10 +6,10 @@
     --padding-xl: 1.4rem;
 
     --fs-xs: 0.8rem;
-    --fs-sm: 0.9rem;
-    --fs-md: 1.3rem;
-    --fs-lg: 1.5rem;
-    --fs-xl: 1.8rem;
+    --fs-sm: clamp(0.8rem, 2.5vw, 0.9rem);
+    --fs-md: clamp(0.9rem, 3vw, 1.2rem);
+    --fs-lg: clamp(1.3rem, 4vw, 1.5rem);
+    --fs-xl: clamp(1.5rem, 5vw, 1.8rem);
 
     --ff-primary: "Poppins", sans-serif;
     --ff-secondary: "Roboto", sans-serif;

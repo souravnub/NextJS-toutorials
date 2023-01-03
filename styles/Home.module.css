@@ -34,7 +34,7 @@
     padding-inline-start: var(--spacing-for-button);
     border-radius: 100vh;
     border: 1.6px solid var(--clr-primary-600);
-    font-size: 0.85rem;
+    font-size: var(--fs-sm);
     color: var(--clr-primary-1000);
 }
 .search_input_container button {
@@ -57,6 +57,7 @@
 }
 .my_topics_container > span {
     font-weight: 500;
+    white-space: nowrap;
     font-size: var(--fs-sm);
     color: var(--clr-primary-900);
 }
@@ -75,7 +76,7 @@
 }
 
 .blog_container_top_section_container h3 {
-    font-size: 1.15rem;
+    font-size: var(--fs-md);
     font-weight: 600;
     color: var(--clr-primary-1000);
     text-transform: capitalize;

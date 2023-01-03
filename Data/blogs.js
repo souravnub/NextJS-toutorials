@@ -11,9 +11,11 @@ const blogs = [
         slug: "growth-with-web-development",
         img: "https://images.unsplash.com/photo-1421941629638-ded5fddb2300?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzZ8fGdyYXlzY2FsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60",
         title: "Wanna grow? Make it easy with coding in web development",
+        title_desc:
+            "Growing in modern day world is an easy task, especially with web development as a carrier path to choose. Your carrier is your idendity and we will help you to carve that out.",
         desc: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis unde placeat est facilis asperiores magnam a illum, laborum veritatis perspiciatis eius ipsum quaerat error ratione vel dolore quos natus rem ipsa, enim doloribus provident ipsam. A  ",
         read_time: "4 min",
-        topics: ["UI Design", "AI"],
+        topics: ["UI Design", "AI", "UX", "Tech", "world-wide"],
 
         createdAt: "Apr 16, 2022",
     },
@@ -28,6 +30,8 @@ const blogs = [
 
         slug: "best-way-to-make-money-faster",
         img: "https://images.unsplash.com/photo-1614791962365-7590111b1b1c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjl8fGdyYXlzY2FsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60",
+        title_desc:
+            "Growing in modern day world is an easy task, especially with web development as a carrier path to choose. Your carrier is your idendity and we will help you to carve that out.",
         title: "Best way to make money faster",
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, magni esse eos eligendi iste quo quae facilis? Eveniet, ducimus maiores!",
         read_time: "4 min",
