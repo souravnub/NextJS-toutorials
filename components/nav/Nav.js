@@ -17,7 +17,9 @@ const Nav = () => {
 
     useEffect(() => {
         const navHeight = navRef.current.getBoundingClientRect().height;
-        document.body.style.paddingBlockStart = navHeight + "px";
+        document
+            .querySelector(":root")
+            .style.setProperty("--nav-height", navHeight + "px");
     }, []);
 
     useEffect(() => {

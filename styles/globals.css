@@ -12,7 +12,7 @@
     --fs-xl: clamp(1.5rem, 5vw, 1.8rem);
 
     --ff-primary: "Poppins", sans-serif;
-    --ff-secondary: "Roboto", sans-serif;
+    --ff-secondary: "Montserrat", sans-serif;
     --ff-tertiary: "Open Sans", sans-serif;
 
     --clr-primary-100: white;
@@ -27,12 +27,15 @@
 
     --clr-hover-300: rgb(229, 229, 229);
     --clr-hover-400: rgb(220, 220, 220);
+    --clr-hover-1000: rgb(48, 48, 48);
 
     --font-clr: black;
 
     --border-primary: 1.6px solid var(--clr-primary-600);
 
     --z-index-nav: 999;
+
+    --nav-height: 0; /*will be set by js in Nav.js*/
 }
 /* Box sizing rules */
 *,
@@ -72,6 +75,7 @@ body {
     text-rendering: optimizeSpeed;
     line-height: 1.5;
     font-family: var(--ff-primary);
+    padding-block-start: var(--nav-height);
 }
 
 /* A elements that don't have a class get default styles */
@@ -138,6 +142,8 @@ p {
     width: 1px !important;
     white-space: nowrap !important; /* 3 */
 }
+
+/* buttons */
 
 .button_primary_box,
 .button_border_box,

@@ -1,5 +1,11 @@
+import Image from "next/image";
 import React, { useRef } from "react";
+import PrimaryInput from "../../components/inputs/PrimaryInput";
+import TextArea from "../../components/inputs/TextArea";
 import useHandlePostContact from "../../hooks/useHandleContact";
+import handShakeSVG from "../../public/waving-hand-sign.svg";
+import { RxArrowTopRight } from "react-icons/rx";
+import styles from "./contactPage.module.css";
 
 const contactPage = () => {
     const nameInputRef = useRef(null);
@@ -20,33 +26,44 @@ const contactPage = () => {
     };
 
     return (
-        <form onSubmit={handleFormSubmit}>
-            <label for="name">name</label>
-            <input
-                ref={nameInputRef}
-                type="text"
-                required
-                placeholder="name"
-                id="name"
-            />
-            <label for="email">email</label>
-            <input
-                ref={emailInputRef}
-                type="email"
-                id="email"
-                placeholder="email"
-            />
-            <label for="message">message</label>
-            <textarea
-                ref={messageInputRef}
-                placeholder="message"
-                id="message"
-                cols="30"
-                rows="10"></textarea>
-            <button className="button_primary_box" disabled={isLoading}>
-                Submit
-            </button>
-        </form>
+        <section className={styles.main_contact_page_container}>
+            <h1>
+                <span>Love to hear from you,</span>
+                <span>
+                    Get in touch
+                    <Image src={handShakeSVG} width={50} height={50} alt="" />
+                </span>
+            </h1>
+            <form onSubmit={handleFormSubmit}>
+                <PrimaryInput
+                    inputRef={nameInputRef}
+                    label="Your name"
+                    id="name"
+                    type="text"
+                    required={true}
+                    placeHolder="John Doe"
+                />
+                <PrimaryInput
+                    inputRef={emailInputRef}
+                    label="Your email"
+                    id="email"
+                    type="email"
+                    required={true}
+                    placeHolder="example@mail.com"
+                />
+                <TextArea
+                    inputRef={messageInputRef}
+                    label="Message"
+                    id="message"
+                    resizable={true}
+                    required={true}
+                    placeHolder="Woha! Just want to say something."
+                />
+                <button className="button_primary_box" disabled={isLoading}>
+                    Just Send <RxArrowTopRight />
+                </button>
+            </form>
+        </section>
     );
 };
 

@@ -1,0 +1,83 @@
+.main_contact_page_container {
+    display: flex;
+    gap: var(--padding-xl);
+    justify-content: center;
+    flex-direction: column;
+
+    padding-inline: var(--padding-xl);
+    max-width: 80rem;
+    margin-inline: auto;
+
+    height: calc(100vh - var(--nav-height));
+}
+
+/*600px*/
+@media screen and (max-height: 37.5rem) {
+    .main_contact_page_container {
+        height: auto;
+        padding-block: var(--padding-xl);
+    }
+}
+
+.main_contact_page_container > h1 {
+    display: flex;
+    flex-direction: column;
+    font-size: calc(var(--fs-xl) + 0.3rem);
+    font-weight: 600;
+    font-family: var(--ff-secondary);
+}
+
+.main_contact_page_container h1 span:nth-of-type(2) {
+    display: flex;
+    gap: var(--padding-lg);
+}
+
+.main_contact_page_container > form {
+    display: grid;
+    row-gap: var(--padding-lg);
+    column-gap: var(--padding-xl);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+}
+/*600px*/
+@media screen and (max-width: 37.5rem) {
+    .main_contact_page_container > form {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, auto);
+    }
+}
+
+.main_contact_page_container form div:has(textarea) {
+    grid-column: 1 / -1;
+} /*if it isn't supported then below selector will be used*/
+
+.main_contact_page_container form div:nth-of-type(3) {
+    grid-column: 1 / -1;
+}
+
+.main_contact_page_container form textarea {
+    min-height: 10rem;
+}
+
+.main_contact_page_container form button {
+    width: max(80%, 18rem);
+
+    background-color: var(--clr-primary-1000);
+    border-radius: 0;
+    margin-block-start: var(--padding-xl);
+    color: var(--clr-primary-100);
+    font-size: var(--fs-sm);
+    font-family: var(--ff-secondary);
+    font-weight: 400;
+
+    display: flex;
+    gap: var(--padding-xs);
+    align-items: center;
+    justify-content: center;
+}
+.main_contact_page_container form button svg {
+    font-size: var(--fs-md);
+}
+.main_contact_page_container form button:hover {
+    background-color: var(--clr-hover-1000);
+}

@@ -1,0 +1,41 @@
+.primary_input {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-xs);
+    color: var(--clr-primary-1000);
+}
+
+.primary_input label {
+    font-size: var(--fs-sm);
+    font-family: var(--ff-secondary);
+    font-weight: 600;
+}
+.primary_input input,
+.primary_input textarea {
+    padding: var(--padding-md);
+    border: none;
+    background-color: var(--clr-primary-200);
+    border-radius: 0;
+}
+.primary_input input:is(:focus, :focus-visible),
+.primary_input textarea:is(:focus, :focus-visible) {
+    outline: 1.5px solid var(--clr-primary-900);
+}
+.primary_input input::placeholder,
+.primary_input textarea::placeholder {
+    font-size: var(--fs-sm);
+    color: var(--clr-primary-800);
+}
+
+/*600px*/
+@media screen and (max-width: 37.5rem) {
+    .primary_input {
+        gap: calc(var(--padding-xs) - 0.4rem);
+    }
+    .primary_input input,
+    .primary_input textarea {
+        font-size: var(--fs-md);
+    }
+}
