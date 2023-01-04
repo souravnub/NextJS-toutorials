@@ -6,6 +6,7 @@ import useHandlePostContact from "../../hooks/useHandleContact";
 import handShakeSVG from "../../public/waving-hand-sign.svg";
 import { RxArrowTopRight } from "react-icons/rx";
 import styles from "./contactPage.module.css";
+import PrimaryLoadingButton from "../../components/buttons/PrimaryLoadingButton";
 
 const contactPage = () => {
     const nameInputRef = useRef(null);
@@ -59,9 +60,9 @@ const contactPage = () => {
                     required={true}
                     placeHolder="Woha! Just want to say something."
                 />
-                <button className="button_primary_box" disabled={isLoading}>
+                <PrimaryLoadingButton isLoading={isLoading}>
                     Just Send <RxArrowTopRight />
-                </button>
+                </PrimaryLoadingButton>
             </form>
         </section>
     );

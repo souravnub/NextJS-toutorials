@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Loader from "../loader/loader";
+import BlogsLoader from "../loaders/blogs loader/BlogsLoader";
 import styles from "./blogsContainer.module.css";
 
 const BlogsContainer = ({ blogs, isLoading, isError, fullDiscription }) => {
     if (isLoading) {
         return (
             <div className={styles.blog_loader}>
-                <Loader text="Loading blogs" />
+                <BlogsLoader text="Loading blogs" />
             </div>
         );
     }

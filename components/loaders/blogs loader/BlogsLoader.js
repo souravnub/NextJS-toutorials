@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./loader.module.css";
+import styles from "./blogsLoader.module.css";
 
-const Loader = ({ text, transitionDuration = 300, dotCount = 3 }) => {
+const BlogsLoader = ({ text, transitionDuration = 300, dotCount = 3 }) => {
     const loaderDotsContainerRef = useRef(null);
     const [shownDotsCount, setShownDotsCount] = useState(0);
 
@@ -68,4 +68,4 @@ const Loader = ({ text, transitionDuration = 300, dotCount = 3 }) => {
     );
 };
 
-export default Loader;
+export default BlogsLoader;
