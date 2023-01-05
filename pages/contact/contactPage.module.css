@@ -78,6 +78,3 @@
 .main_contact_page_container form button svg {
     font-size: var(--fs-md);
 }
-.main_contact_page_container form button:hover {
-    background-color: var(--clr-hover-1000);
-}

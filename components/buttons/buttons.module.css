@@ -1,4 +1,6 @@
 .primary_loading_btn {
+    --transition-delay: 100ms;
+
     position: relative;
     padding: var(--padding-md) var(--padding-xl);
 
@@ -25,27 +27,115 @@
 }
 
 .children_container {
+    min-width: max-content;
+
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background-color: green; */
 
-    transition: transform 250ms ease-in-out, opacity 500ms 100ms ease;
+    transition: transform 250ms ease-in-out,
+        opacity 500ms calc(var(--transition-delay) + 300ms) ease;
 }
 
 .loader_container {
     position: absolute;
     inset: 0;
     transform: translateY(-100%) scale(0.9);
-    /* background-color: red; */
 
     opacity: 0;
 
-    transition: transform 250ms ease-in-out, opacity 500ms 100ms ease;
+    transition: transform 250ms ease-in-out,
+        opacity 500ms var(--transition-delay) ease;
+}
+.success_msg_container {
+    /* got color from js */
+    color: var(--color, var(--clr-primary-100));
+    min-width: max-content;
+
+    position: absolute;
+    inset: 0;
+    padding-inline: var(--padding-md);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.success_msg > * {
+    display: inline-block;
+    transform: translateY(40%);
+    opacity: 0;
+
+    /* transition delay is set by js */
+    transition: transform 250ms ease, opacity 250ms ease;
+}
+
+.checkmark {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: var(--clr-primary-100);
+    stroke-miterlimit: 10;
+
+    transition: opacity 250ms ease;
+}
+.checkmark_check {
+    /* got color from js */
+    stroke: var(--color, var(--clr-primary-100));
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke-linecap: round;
+    opacity: 0;
+
+    transition: stroke-dashoffset 0.4s cubic-bezier(0.65, 0, 0.45, 1)
+            var(--transition-delay),
+        opacity 250ms ease;
+}
+
+.error_msg_container {
+    composes: success_msg_container;
+
+    gap: var(--padding-xs);
+}
+.error_msg_container > svg {
+    opacity: 0;
+    transition: opacity 250ms var(--transition-delay) ease;
+}
+.error_msg > * {
+    display: inline-block;
+    transform: translateY(40%);
+    opacity: 0;
+
+    /* transition delay is set by js */
+    transition: transform 250ms ease, opacity 250ms ease;
+}
+
+/*button states*/
+.success_state .success_msg > * {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.success_state .checkmark_check {
+    stroke-dashoffset: 0;
+    opacity: 1;
+}
+
+.error_state .error_msg > * {
+    transform: translateY(0);
+    opacity: 1;
+}
+.error_state .error_msg_container > svg {
+    opacity: 1;
+}
+
+.success_state .children_container,
+.error_state .children_container,
 .loading_state .children_container {
     transform: translateY(100%) scale(0.9);
     opacity: 0;

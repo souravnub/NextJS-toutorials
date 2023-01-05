@@ -13,7 +13,7 @@ const contactPage = () => {
     const emailInputRef = useRef(null);
     const messageInputRef = useRef(null);
 
-    const { postContactReq, data, isLoading, isError, error } =
+    const { postContactReq, data, isLoading, isSuccess, error } =
         useHandlePostContact();
 
     const handleFormSubmit = async (e) => {
@@ -60,7 +60,10 @@ const contactPage = () => {
                     required={true}
                     placeHolder="Woha! Just want to say something."
                 />
-                <PrimaryLoadingButton isLoading={isLoading}>
+                <PrimaryLoadingButton
+                    isLoading={isLoading}
+                    isSuccess={isSuccess}
+                    successMsg="Your message was received!">
                     Just Send <RxArrowTopRight />
                 </PrimaryLoadingButton>
             </form>

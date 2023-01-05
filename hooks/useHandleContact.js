@@ -4,11 +4,12 @@ export default function useHandlePostContact() {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState(null);
 
-    const [isError, setIsError] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(undefined);
     const [error, setError] = useState(null);
 
     const postContactReq = async ({ body }) => {
         setIsLoading(true);
+        setIsSuccess(undefined);
 
         await new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -23,14 +24,20 @@ export default function useHandlePostContact() {
             });
             const json = await res.json();
 
+            if (json.success === true) {
+                setIsSuccess(true);
+            } else {
+                setIsSuccess(false);
+            }
+
             setData(json);
         } catch (err) {
-            setIsError(true);
+            setIsSuccess(false);
             // setError(...some_formatted_error)
         }
 
         setIsLoading(false);
     };
 
-    return { postContactReq, data, isLoading, isError, error };
+    return { postContactReq, data, isLoading, isSuccess, error };
 }
