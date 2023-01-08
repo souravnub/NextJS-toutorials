@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { BiErrorCircle } from "react-icons/bi";
 import CircularLoader from "../loaders/circular loader/CircularLoader";
 import styles from "./buttons.module.css";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue } from "framer-motion";
 
 const svgVariants = {
-    start: {
+    hidden: {
         strokeDashoffset: "48px",
     },
-    end: {
+    shown: {
         strokeDashoffset: 0,
         transition: {
             duration: 0.5,
@@ -17,41 +17,27 @@ const svgVariants = {
 };
 
 const successContainerVariants = {
-    start: {
+    hidden: {
         opacity: 0,
     },
-    end: {
+    shown: {
         opacity: 1,
         transition: {
             when: "beforeChildren",
-            staggerChildren: 0.1,
+            staggerChildren: 0.05,
         },
     },
     exit: {
         opacity: 0,
     },
 };
-const errorContainerVariants = {
-    start: {
-        opacity: 0,
-    },
-    end: {
-        opacity: 1,
-        transition: {
-            when: "beforeChildren",
-            staggerChildren: 0.1,
-        },
-    },
-    exit: {
-        opacity: 0,
-    },
-};
+const errorContainerVariants = successContainerVariants;
 
-const successTextEle = {
-    start: {
+const TextEleVariants = {
+    hidden: {
         opacity: 0,
     },
-    end: {
+    shown: {
         opacity: 1,
     },
 };
@@ -67,8 +53,8 @@ const PrimaryLoadingButton = ({
     errorMsgColor,
     successMsgColor,
     loaderStrokeColor = "var(--clr-primary-100)",
-    //in ms
-    MsgDuration = 3000,
+    //in ms - it is the time to wait after completion of text animation
+    MsgDuration = 1000,
     onClick,
 }) => {
     const btnRef = useRef(null);
@@ -76,18 +62,23 @@ const PrimaryLoadingButton = ({
     const errorMsgRef = useRef(null);
 
     const [currentState, setCurrentState] = useState("normal");
+    const [hadTextAnimationCompleted, setHadTextAnimationCompleted] =
+        useState(undefined);
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            if (currentState === "success" || currentState === "error") {
-                setCurrentState("normal");
-            }
-        }, MsgDuration);
+        if (hadTextAnimationCompleted === true) {
+            const timeout = setTimeout(() => {
+                if (currentState === "success" || currentState === "error") {
+                    setCurrentState("normal");
+                    setHadTextAnimationCompleted(undefined);
+                }
+            }, MsgDuration);
 
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [isSuccess, currentState]);
+            return () => {
+                clearTimeout(timeout);
+            };
+        }
+    }, [isSuccess, currentState, hadTextAnimationCompleted]);
 
     useEffect(() => {
         if (isLoading) {
@@ -152,9 +143,15 @@ const PrimaryLoadingButton = ({
                     {currentState === "success" && (
                         <motion.div
                             variants={successContainerVariants}
-                            initial="start"
-                            animate="end"
+                            initial="hidden"
+                            animate="shown"
                             exit="exit"
+                            onAnimationStart={() =>
+                                setHadTextAnimationCompleted(false)
+                            }
+                            onAnimationComplete={() =>
+                                setHadTextAnimationCompleted(true)
+                            }
                             style={{ "--color": successMsgColor }}
                             className={styles.success_msg_container}>
                             <svg
@@ -174,7 +171,7 @@ const PrimaryLoadingButton = ({
                                 {[...successMsg].map((alp, idx) => {
                                     return (
                                         <motion.span
-                                            variants={successTextEle}
+                                            variants={TextEleVariants}
                                             key={idx}>
                                             {alp === " " ? <>&nbsp;</> : alp}
                                         </motion.span>
@@ -190,13 +187,19 @@ const PrimaryLoadingButton = ({
                         <motion.div
                             style={{ "--color": errorMsgColor }}
                             variants={errorContainerVariants}
-                            initial="start"
-                            animate="end"
+                            initial="hidden"
+                            animate="shown"
                             exit="exit"
+                            onAnimationStart={() => {
+                                setHadTextAnimationCompleted(false);
+                            }}
+                            onAnimationComplete={() => {
+                                setHadTextAnimationCompleted(true);
+                            }}
                             className={styles.error_msg_container}>
                             <motion.div
                                 className={styles.svg_container}
-                                variants={successTextEle}>
+                                variants={TextEleVariants}>
                                 <BiErrorCircle
                                     size="20px"
                                     style={{ "--color": successMsgColor }}
@@ -206,7 +209,7 @@ const PrimaryLoadingButton = ({
                                 {[...errorMsg].map((alp, idx) => {
                                     return (
                                         <motion.span
-                                            variants={successTextEle}
+                                            variants={TextEleVariants}
                                             key={idx}>
                                             {alp === " " ? <>&nbsp;</> : alp}
                                         </motion.span>
