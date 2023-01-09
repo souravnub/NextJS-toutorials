@@ -1,6 +1,4 @@
 .primary_loading_btn {
-    --transition-delay: 100ms;
-
     position: relative;
     padding: var(--padding-md) var(--padding-xl);
 
@@ -12,7 +10,7 @@
     font-weight: 400;
     transition: transform 3ms ease-in-out;
 
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .primary_loading_btn:active {
@@ -22,16 +20,16 @@
 .primary_loading_btn svg {
     font-size: var(--fs-md);
 }
-.children_copy {
-    opacity: 0;
+.container_copy {
+    max-width: max-content;
+    position: absolute;
+    visibility: hidden;
 }
 
 .children_container {
-    min-width: max-content;
-    /* background-color: blue; */
-
     position: absolute;
     inset: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,8 +40,6 @@
     inset: 0;
 }
 .success_msg_container {
-    /* background-color: green; */
-
     /* got color from js */
     color: var(--color, var(--clr-primary-100));
 
@@ -61,7 +57,7 @@
 }
 
 .checkmark {
-    width: auto;
+    width: 30px;
     height: 30px;
     stroke-width: 3;
     stroke: var(--clr-primary-100);
@@ -82,14 +78,39 @@
 .error_msg_container {
     composes: success_msg_container;
 
-    gap: var(--padding-xs);
+    gap: var(--padding-sm);
 }
-.error_msg_container > .svg_container {
+
+/*error svg*/
+
+.error_msg_container svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-primary-100);
+    stroke-miterlimit: 10;
+
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.error_msg_container path {
+
+.error_msg_container svg {
+    rotate: 90deg;
+}
+.error_msg_container rect {
     /* got color from js */
     stroke: var(--color, var(--clr-primary-100));
+    fill: var(--color, var(--clr-primary-100));
+}
+
+.error_line {
+    transform-origin: center;
+    transition: width 500ms ease;
+}
+
+.error_msg_container .error_line_1 {
+    transform: rotate(45deg);
+}
+.error_msg_container .error_line_2 {
+    transform: rotate(-45deg);
 }
