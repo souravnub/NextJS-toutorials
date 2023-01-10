@@ -3,26 +3,33 @@ import { userData } from "../Data/user";
 import fetchBlogs from "../utils/fetchBlogs";
 import useNotInitialRender from "./useNotInitialRender";
 
-export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
+export default function useGetBlogs(
+    { type, initialBlogs, params, callback },
+    dependencyArr
+) {
     const notInitialRender = useNotInitialRender();
 
     const [blogs, setBlogs] = useState(initialBlogs);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [totalBlogsInDB, setTotalBlogsInDB] = useState(0);
 
     const getBlogs = async (blogsType) => {
-        console.log("requesting");
         setIsLoading(true);
 
         try {
-            const { success, blogs } = await fetchBlogs({
+            const { success, blogs, db_count } = await fetchBlogs({
                 type: blogsType,
                 following: blogsType === "following" && userData.following,
+                params,
             });
 
             if (success === true) {
                 setIsError(false);
                 setBlogs(blogs);
+                setTotalBlogsInDB(db_count);
+
+                callback({ blogs, totalBlogsInDB: db_count });
             } else {
                 setIsError(true);
                 setBlogs(null);
@@ -49,5 +56,6 @@ export default function useGetBlogs({ type, initialBlogs }, dependencyArr) {
         blogs,
         isLoading,
         isError,
+        totalBlogsInDB,
     };
 }

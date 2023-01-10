@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import blogsFromDatabase from "../Data/blogs";
@@ -11,19 +11,46 @@ import styles from "../styles/Home.module.css";
 
 import BlogsContainer from "../components/blogs container/BlogsContainer";
 import useGetBlogs from "../hooks/useGetBlogs";
+import useNotInitialRender from "../hooks/useNotInitialRender";
+
+const DEFAULT_BLOGS_PAGE = 1;
+const DEFAULT_BLOGS_COUNT = 2;
 
 export default function Home({ blogs: propBlogs }) {
     const serachInputRef = useRef(null);
+    const notInitialRender = useNotInitialRender();
 
+    const [blogs, setBlogs] = useState(propBlogs);
+    const [hadBlogTypeChanged, setHadBlogTypeChanged] = useState(false);
     const [currentBlogsType, setCurrentBlogsType] = useState("all");
+    const [page, setPage] = useState(DEFAULT_BLOGS_PAGE);
+    const [DBBlogsCount, setDBBlogsCount] = useState(0);
 
-    let { blogs, isLoading, isError } = useGetBlogs(
+    useGetBlogs(
         {
             type: currentBlogsType,
             initialBlogs: propBlogs,
+            params: { page, count: DEFAULT_BLOGS_COUNT },
+
+            callback: ({ blogs, totalBlogsInDB }) => {
+                setBlogs((prev) => [...prev, ...blogs]);
+                setDBBlogsCount(totalBlogsInDB);
+            },
         },
-        [currentBlogsType]
+        [page, hadBlogTypeChanged]
     );
+
+    useEffect(() => {
+        if (notInitialRender) {
+            setPage(1);
+            setBlogs([]);
+            setHadBlogTypeChanged((prev) => !prev);
+        }
+    }, [currentBlogsType]);
+
+    useEffect(() => {
+        console.log(blogs);
+    }, [blogs]);
 
     const DROPDOWN_OPTIONS = ["all", "following", "popular", "latest"];
 
@@ -33,11 +60,16 @@ export default function Home({ blogs: propBlogs }) {
         // get blogs related to search value and set blogs
         console.log(searchVal);
     };
+
     const handleTopicSelect = (e) => {
         serachInputRef.current.value = e.target.innerText;
     };
 
-    // backend request for blogs will be here and then will be passed into BlogsContainer component
+    const handleFetchMoreBlogs = () => {
+        // page 1 is fetched server side ,,, & ,,, then with infinte scroll page 2 will be fetched and so on
+        setPage((prev) => prev + 1);
+    };
+
     return (
         <main className={styles.main_container}>
             <section className={styles.content_container_left}>
@@ -92,11 +124,12 @@ export default function Home({ blogs: propBlogs }) {
                             </select>
                         </div>
                     </div>
+
                     <BlogsContainer
                         blogs={blogs}
-                        isLoading={isLoading}
-                        isError={isError}
+                        totalBlogsInDB={DBBlogsCount}
                         fullDiscription={false}
+                        handleFetchMore={handleFetchMoreBlogs}
                     />
                 </article>
             </section>
@@ -127,7 +160,11 @@ export default function Home({ blogs: propBlogs }) {
 }
 
 export async function getServerSideProps(context) {
+    const lastBlogIndex = DEFAULT_BLOGS_COUNT * DEFAULT_BLOGS_PAGE;
+    const firstBlogIndex = lastBlogIndex - DEFAULT_BLOGS_COUNT;
+    const blogs = blogsFromDatabase.slice(firstBlogIndex, lastBlogIndex);
+
     return {
-        props: { blogs: blogsFromDatabase },
+        props: { blogs },
     };
 }

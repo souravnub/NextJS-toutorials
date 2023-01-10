@@ -4,7 +4,7 @@
     padding-block-start: var(--padding-xl);
 }
 
-.main_blogs_container > *:nth-of-type(1)::before {
+.main_blogs_container > .blog:nth-of-type(1)::before {
     content: "";
     position: absolute;
     top: 0;
@@ -13,7 +13,7 @@
     border-radius: 100vh;
     background-color: var(--clr-primary-400);
 }
-.main_blogs_container > *::after {
+.main_blogs_container > .blog::after {
     content: "";
     position: absolute;
     bottom: 0;

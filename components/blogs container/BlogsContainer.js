@@ -3,8 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import BlogsLoader from "../loaders/blogs loader/BlogsLoader";
 import styles from "./blogsContainer.module.css";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const BlogsContainer = ({ blogs, isLoading, isError, fullDiscription }) => {
+const BlogsContainer = ({
+    blogs,
+    totalBlogsInDB,
+    isLoading,
+    isError,
+    fullDiscription,
+    handleFetchMore,
+}) => {
     if (isLoading) {
         return (
             <div className={styles.blog_loader}>
@@ -22,7 +30,20 @@ const BlogsContainer = ({ blogs, isLoading, isError, fullDiscription }) => {
     }
 
     return (
-        <div className={styles.main_blogs_container}>
+        <InfiniteScroll
+            style={{ overflow: "hidden" }}
+            className={styles.main_blogs_container}
+            dataLength={blogs.length}
+            next={handleFetchMore}
+            hasMore={blogs.length !== totalBlogsInDB}
+            loader={
+                <div
+                    style={{
+                        marginBlockStart: "var(--padding-lg)",
+                    }}>
+                    <BlogsLoader text="Fetching blogs" />
+                </div>
+            }>
             {blogs.map(
                 ({
                     author,
@@ -114,7 +135,7 @@ const BlogsContainer = ({ blogs, isLoading, isError, fullDiscription }) => {
                     );
                 }
             )}
-        </div>
+        </InfiniteScroll>
     );
 };
 
