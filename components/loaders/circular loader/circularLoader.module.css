@@ -5,7 +5,7 @@
     margin: 0 auto;
 
     width: var(--width);
-    height: 100%;
+    height: var(--width);
 }
 .loader:before {
     content: "";
